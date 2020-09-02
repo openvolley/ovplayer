@@ -1,7 +1,7 @@
 ovp_shiny_server <- function(app_data) {
     function(input, output, session) {
-        plays_cols_to_show_default <- c("home_team", "visiting_team", "video_time", "code", "set_number", "home_team_score", "visiting_team_score")
-        plays_cols_to_show <- plays_cols_to_show_default ## that will be modified depending on columns in playlist
+        plays_cols_to_show_default <- c("video_time", "code", "set_number", "home_team_score", "visiting_team_score")
+        plays_cols_to_show <- if (!is.null(app_data$plays_cols_to_show)) app_data$plays_cols_to_show else plays_cols_to_show_default ## this will be modified depending on columns actually in playlist
 
         playstable_data <- reactiveVal(NULL)
         output$playstable <- DT::renderDataTable({
