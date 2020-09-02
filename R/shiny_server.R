@@ -83,8 +83,7 @@ ovp_shiny_server <- function(app_data) {
                     }
                     pl$video_src[lidx] <- file.path(app_data$video_server_url, basename(pl$video_src[lidx]))
                 } else if (is.string(app_data$video_serve_method) && app_data$video_serve_method %in% c("none")) {
-                    ## do nothing except pass the video file info into video_src
-                    meta_video$video_src <- meta_video$file
+                    ## do nothing
                 } else {
                     stop("unrecognized video_serve_method: ", app_data$video_serve_method)
                 }
@@ -134,18 +133,14 @@ ovp_shiny_server <- function(app_data) {
             }
         })
         output$player_controls_ui <- renderUI({
-            ##if (is.null(playlist()) || app_data$video_serve_method == "standalone") {
-            ##    NULL
-            ##} else {
-                tags$div(tags$button("Play", onclick = "dvjs_video_play();"),
-                         tags$button("Prev", onclick = "dvjs_video_prev();"),
-                         tags$button("Next", onclick = "dvjs_video_next(false);"),
-                         tags$button("Pause", onclick = "dvjs_video_pause();"),
-                         tags$button("Back 1s", onclick = "dvjs_jog(-1);"),
-                         tags$span(id = "subtitle", "Score"),
-                         tags$span(id = "subtitleskill", "Skill"),
-                         uiOutput("create_clip_button_ui", inline = TRUE))
-            ##}
+            tags$div(tags$button("Play", onclick = "dvjs_video_play();"),
+                     tags$button("Prev", onclick = "dvjs_video_prev();"),
+                     tags$button("Next", onclick = "dvjs_video_next(false);"),
+                     tags$button("Pause", onclick = "dvjs_video_pause();"),
+                     tags$button("Back 1s", onclick = "dvjs_jog(-1);"),
+                     tags$span(id = "subtitle", "Score"),
+                     tags$span(id = "subtitleskill", "Skill")
+                     )
         })
 
         observeEvent(input$playback_rate, {

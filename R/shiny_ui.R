@@ -23,6 +23,8 @@ ovp_shiny_ui_main <- function() {
         tags$head(tags$script("var vo_rsztmr;
 $(document).on('shiny:sessioninitialized', function() {
     Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight());
+    $('#dv_player').prop('muted', true);
+    dvjs_yt_first_mute = true;
     $(window).resize(function() {
       clearTimeout(vo_rsztmr);
       vo_rsztmr = setTimeout(vo_doneResizing, 500); });
@@ -46,6 +48,6 @@ sliderInput("playback_rate", "Playback rate:", min = 0.1, max = 2.0, value = 1.0
 tags$script("set_vspinner = function() { $('#dv_player').addClass('loading'); }"),
 tags$script("remove_vspinner = function() { $('#dv_player').removeClass('loading'); }"),
 tags$style("video.loading { background: black; }"),
-tags$script("function dvjs_video_onstart() { Shiny.setInputValue('playstable_current_item', dvjs_video_controller.current); document.getElementById(\"subtitle\").textContent=dvjs_video_controller.queue[dvjs_video_controller.current].subtitle; document.getElementById(\"subtitleskill\").textContent=dvjs_video_controller.queue[dvjs_video_controller.current].subtitleskill; if (dvjs_video_controller.type == 'youtube') { Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); } else { Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); } Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight()); }")
+tags$script("function dvjs_video_onstart() { Shiny.setInputValue('playstable_current_item', dvjs_video_controller.current); el = document.getElementById(\"subtitle\"); if (typeof el !== 'undefined' && el !== null) el.textContent=dvjs_video_controller.queue[dvjs_video_controller.current].subtitle; el = document.getElementById(\"subtitleskill\"); if (typeof el !== 'undefined' && el !== null) el.textContent=dvjs_video_controller.queue[dvjs_video_controller.current].subtitleskill; if (dvjs_video_controller.type == 'youtube') { Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); } else { Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); } Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight()); }")
 )
 }
