@@ -1,0 +1,32 @@
+Package: ovplayer
+Title: An R Shiny App for Viewing Volleyball Video Playlists
+Version: 0.0.1
+Authors@R: c(person(given = "Ben", family = "Raymond", role = c("aut", "cre"), email = "ben@untan.gl"),
+             person(given = "Adrien", family = "Ickowicz", role = "aut"))
+Description: A Shiny app for viewing volleyball video playlists.
+URL: https://github.com/openvolley/ovplayer
+BugReports: https://github.com/openvolley/ovplayer/issues
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+Imports:
+    assertthat,
+    datavolley (>= 0.13.0),
+    digest,
+    dplyr,
+    DT,
+    fs,
+    htmltools,
+    methods,
+    ovideo (>= 0.3.3),
+    rlang,
+    servr (>= 0.15.1),
+    shiny,
+    shinyWidgets,
+    sys,
+    tidyr
+Suggests:
+    testthat
+Remotes: openvolley/datavolley, openvolley/ovideo
+RoxygenNote: 7.1.0
