@@ -70,3 +70,7 @@ ply <- ov_video_playlist(px, x$meta, extra_cols = c("subtitle", "subtitleskill",
 ## start the shiny app
 ovp_shiny(playlist = ply, video_server = "servr")
 ```
+
+And you should get something like:
+
+<img src="man/figures/ovplayer.png" style="border: 1px solid black" />
