@@ -19,13 +19,11 @@ Imports:
     fs,
     htmltools,
     methods,
-    ovideo (>= 0.3.3),
+    ovideo (>= 0.3.6),
     rlang,
     servr (>= 0.15.1),
     shiny,
-    shinyWidgets,
-    sys,
-    tidyr
+    sys
 Suggests:
     testthat
 Remotes: openvolley/datavolley, openvolley/ovideo
