@@ -18,7 +18,7 @@
 #' }
 #'
 #' @export
-ovp_example_playlist <- function(choice) {
+ovp_example_playlist <- function(choice = 1) {
     assert_that(is.numeric(choice))
     switch(as.character(choice),
            "1" = {
