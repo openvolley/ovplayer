@@ -2,6 +2,7 @@ ovp_shiny_server <- function(app_data) {
     function(input, output, session) {
         plays_cols_to_show_default <- c("video_time", "code", "set_number", "home_team_score", "visiting_team_score")
         plays_cols_to_show <- if (!is.null(app_data$plays_cols_to_show)) app_data$plays_cols_to_show else plays_cols_to_show_default ## this will be modified depending on columns actually in playlist
+        playlist_in <- reactiveVal(app_data$playlist)
 
         playstable_data <- reactiveVal(NULL)
         output$playstable <- DT::renderDataTable({
@@ -57,8 +58,8 @@ ovp_shiny_server <- function(app_data) {
         })
 
         playlist <- reactive({
-            if (!is.null(app_data$playlist) && nrow(app_data$playlist) > 0) {
-                pl <- app_data$playlist
+            if (!is.null(playlist_in()) && nrow(playlist_in()) > 0 && all(c("video_src", "type") %in% names(playlist_in()))) {
+                pl <- playlist_in()
                 ## populate the plays table data
                 plays_cols_to_show <<- intersect(names(pl), plays_cols_to_show)
                 playstable_data(pl[, plays_cols_to_show])
@@ -82,6 +83,8 @@ ovp_shiny_server <- function(app_data) {
                         }
                     }
                     pl$video_src[lidx] <- file.path(app_data$video_server_url, basename(pl$video_src[lidx]))
+                } else if (is.function(app_data$video_serve_method)) {
+                    pl$video_src <- app_data$video_serve_method(pl$video_src, pl$file)
                 } else if (is.string(app_data$video_serve_method) && app_data$video_serve_method %in% c("none")) {
                     ## do nothing
                 } else {

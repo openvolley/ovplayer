@@ -34,6 +34,7 @@ $(document).on('shiny:sessioninitialized', function() {
 });"),
     tags$style(".showhide {border-radius: 20px; padding: 6px 9px; background: #668;} .showhide:hover {background: #668;} .showhide:focus {background: #668;}")
 ),
+uiOutput("error_dialog"),
 fluidRow(column(8, tags$div(id = "video_holder",
                             ovideo::ov_video_player(id = "dv_player", type = "local", controls = FALSE, poster = "data:image/gif,AAAA", style = "border: 1px solid black; width: 90%;", onloadstart = "set_vspinner();", oncanplay = "remove_vspinner();"),
                             ovideo::ov_video_player(id = "dvyt_player", type = "youtube", controls = FALSE, style = "border: 1px solid black; width: 90%; height: 480px; display:none;")), ## start hidden
