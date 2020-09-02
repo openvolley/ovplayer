@@ -50,8 +50,12 @@ px <- datavolley::plays(x)
 ##   that the video covers
 px <- px[!is.na(px$skill), ]
 
+## make subtitle columns (shown just underneath the player)
+px$subtitle <- px$player_name
+px$subtitleskill <- ifelse(px$skill == "Attack", px$attack_code, px$skill)
+
 ## build our playlist of these actions
-ply <- ov_video_playlist(px, x$meta, extra_cols = c("home_team", "visiting_team", "video_time", "code", "set_number", "home_team_score", "visiting_team_score"))
+ply <- ov_video_playlist(px, x$meta, extra_cols = c("subtitle", "subtitleskill", "video_time", "code", "set_number", "home_team_score", "visiting_team_score"))
 
 ## start the shiny app
 ovp_shiny(playlist = ply, video_server = "servr")
