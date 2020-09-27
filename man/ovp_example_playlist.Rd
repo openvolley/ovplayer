@@ -4,7 +4,7 @@
 \alias{ovp_example_playlist}
 \title{Example playlists}
 \usage{
-ovp_example_playlist(choice)
+ovp_example_playlist(choice = 1)
 }
 \arguments{
 \item{choice}{numeric: which data file to return?

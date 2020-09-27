@@ -38,12 +38,28 @@ ovp_shiny_server <- function(app_data) {
         observeEvent(input$playstable_current_item, {
             if (!is.null(input$playstable_current_item)) {
                 ## input$playstable_current_item is 0-based
-                isolate(np <- nrow(playlist()))
+                isolate(pl <- playlist())
+                np <- nrow(pl)
                 if (input$playstable_current_item < np) {
                     playstable_select_row(input$playstable_current_item+1)
+                    if ("comments" %in% names(pl)) {
+                        output$video_dialog <- renderUI({
+                            this <- pl$comments[[input$playstable_current_item+1]]
+                            if (inherits(this, "shiny.tag")) {
+                                this
+                            } else if (is.character(this) && !is.na(this) && length(this) == 1) {
+                                tags$p(this)
+                            } else {
+                                NULL
+                            }
+                        })
+                    } else {
+                        output$video_dialog <- renderUI(NULL)
+                    }
                 } else {
                     ## reached the end of the playlist
                     master_playstable_selected_row <<- -99L
+                    output$video_dialog <- renderUI(NULL)
                 }
             }
         })
@@ -58,8 +74,8 @@ ovp_shiny_server <- function(app_data) {
         })
 
         playlist <- reactive({
-            if (!is.null(playlist_in()) && nrow(playlist_in()) > 0 && all(c("video_src", "type") %in% names(playlist_in()))) {
-                pl <- playlist_in()
+            pl <- playlist_in()
+            if (!is.null(pl) && nrow(pl) > 0 && all(c("video_src", "type") %in% names(pl))) {
                 ## populate the plays table data
                 plays_cols_to_show <<- intersect(names(pl), plays_cols_to_show)
                 playstable_data(pl[, plays_cols_to_show])
@@ -90,15 +106,6 @@ ovp_shiny_server <- function(app_data) {
                 } else {
                     stop("unrecognized video_serve_method: ", app_data$video_serve_method)
                 }
-                ##output$video_dialog <- renderUI({
-                ##    if (any(is.na(meta_video$video_src) | !nzchar(meta_video$video_src))) {
-                ##        tags$div(class = "alert alert-danger", "No video files for these match(es) could be found.")
-                ##    } else if (any(is.na(meta_video$video_src) | !nzchar(meta_video$video_src))) {
-                ##        tags$div(class = "alert alert-danger", "At least one video could not be found.")
-                ##    } else {
-                ##        NULL
-                ##    }
-                ##})
 ##                    event_list <- mutate(event_list, skill = case_when(.data$skill %in% c("Freeball dig", "Freeball over") ~ "Freeball", TRUE ~ .data$skill), ## ov_video needs just "Freeball"
 ##                                         skilltype = case_when(.data$skill %in% c("Serve", "Reception", "Dig", "Freeball", "Block", "Set") ~ .data$skill_type,
 ##                                                                           .data$skill == "Attack" ~ .data$attack_description),
