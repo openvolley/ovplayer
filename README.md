@@ -36,7 +36,7 @@ library(ovideo)
 
 ## read data file bundled with package
 ##  this is a very small example file that contains only one rally
-x <- datavolley::dv_read(system.file("extdata/190301_kats_beds.dvw", package = "ovplayer"))
+x <- datavolley::dv_read(system.file("extdata/190301_kats_beds-clip.dvw", package = "ovplayer"))
 
 ## change the video file to point to our local copy, which is bundled with the ovideo package
 x$meta$video <- data.frame(camera = "",

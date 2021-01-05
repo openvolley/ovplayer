@@ -1,6 +1,6 @@
 Package: ovplayer
 Title: An R Shiny App for Viewing Volleyball Video Playlists
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: c(person(given = "Ben", family = "Raymond", role = c("aut", "cre"), email = "ben@untan.gl"),
              person(given = "Adrien", family = "Ickowicz", role = "aut"))
 Description: A Shiny app for viewing volleyball video playlists.
