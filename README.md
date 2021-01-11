@@ -59,7 +59,7 @@ px$subtitleskill <- ifelse(px$skill == "Attack", px$attack_code, px$skill)
 ply <- ov_video_playlist(px, x$meta, extra_cols = c("subtitle", "subtitleskill", "video_time", "code", "set_number", "home_team_score", "visiting_team_score"))
 
 ## start the shiny app
-ovp_shiny(playlist = ply, video_server = "servr")
+ovp_shiny(playlist = ply)
 ```
 
 And you should get something like:

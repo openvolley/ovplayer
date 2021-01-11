@@ -7,9 +7,12 @@ ovp_shiny_server <- function(app_data) {
         playstable_data <- reactiveVal(NULL)
         output$playstable <- DT::renderDataTable({
             mydat <- playstable_data()
+            
+            mydat[,"code"] <- sapply(mydat[,"code"], function(x) paste0('<strong style="background-color:white;border-radius: 5px;padding: 3px; border: 2px solid #73AD21;">',x,'</strong>'))
             if (!is.null(mydat)) {
                 DT::datatable(names_first_to_capital(mydat[, plays_cols_to_show, drop = FALSE]), rownames = FALSE,
                               extensions = "Scroller", selection = list(mode = "single", selected = 1, target = "row"),
+                              escape = FALSE, 
                               options = list(sDom = '<"top">t<"bottom">rlp', deferRender = TRUE, scrollY = 200, scroller = TRUE, ordering = FALSE)) ## no column sorting
             } else {
                 NULL
