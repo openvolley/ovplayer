@@ -4,7 +4,13 @@
 \alias{ovp_shiny}
 \title{Launch the Shiny app}
 \usage{
-ovp_shiny(playlist, video_server = NULL, launch_browser = TRUE, ...)
+ovp_shiny(
+  playlist,
+  video_server = NULL,
+  launch_browser = TRUE,
+  mobile = FALSE,
+  ...
+)
 }
 \arguments{
 \item{playlist}{data.frame: a playlist as returned by \code{\link[ovideo]{ov_video_playlist}}}

@@ -148,21 +148,36 @@ ovp_shiny_server <- function(app_data) {
                 evaljs("document.getElementById(\"subtitle\").textContent=\"Score\"; document.getElementById(\"subtitleskill\").textContent=\"Skill\";")
             }
         })
-        output$player_controls_ui <- renderUI({
-            tags$div(tags$button("Play", onclick = "dvjs_video_play();"),
-                     tags$button("Prev", onclick = "dvjs_video_prev();"),
-                     tags$button("Next", onclick = "dvjs_video_next(false);"),
-                     tags$button("Pause", onclick = "dvjs_video_pause();"),
-                     tags$button("Back 1s", onclick = "dvjs_jog(-1);"),
-                     tags$span(id = "subtitle", "Score"),
-                     tags$span(id = "subtitleskill", "Skill")
+        output$player_controls_start_ui <- renderUI({
+            tags$div(tags$button("Start", onclick = "dvjs_video_play();", style="background-color:DarkGrey;border-radius: 5px;padding: 3px; border: 2px solid DarkGrey ; font-size: 1.8em; color: white; ")
                      )
         })
-
+        output$player_controls_prev_ui <- renderUI({
+            tags$div(tags$button("Prev", onclick = "dvjs_video_prev();", style="background-color:DarkGrey;border-radius: 5px;padding: 3px; border: 2px solid DarkGrey; font-size: 1.8em;color: white;")
+            )
+        })
+        output$player_controls_next_ui <- renderUI({
+            tags$div(tags$button("Next", onclick = "dvjs_video_next(false);", style="background-color:DarkGrey;border-radius: 5px;padding: 3px; border: 2px solid DarkGrey; font-size: 1.8em;color: white;")
+            )
+        })
+        output$player_controls_play_pause_ui <- renderUI({
+            tags$div(tags$button("Play/Pause", onclick = "dvjs_video_pause();", style="background-color:DarkGrey;border-radius: 5px;padding: 3px; border: 2px solid DarkGrey; font-size: 1.8em;color: white;")
+            )
+        })
+        output$player_controls_back_ui <- renderUI({
+            tags$div(tags$button("Back 1s", onclick = "dvjs_jog(-1);", style="background-color:DarkGrey;border-radius: 5px;padding: 3px; border: 2px solid DarkGrey; font-size: 1.8em;color: white;")
+            )
+        })
         observeEvent(input$playback_rate, {
             if (!is.null(input$playback_rate)) ov_video_control("set_playback_rate", input$playback_rate)
         })
-
+        output$player_controls_skill_ui <- renderUI({
+            tags$div(tags$span(id = "subtitleskill", "Skill")
+            )
+        })
+        output$player_controls_score_ui <- renderUI({
+            tags$div( tags$span(id = "subtitle", "Score"))
+        })
         output$chart_ui <- renderUI(app_data$chart_renderer)
 
         ## height of the video player element
