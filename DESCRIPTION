@@ -23,7 +23,8 @@ Imports:
     rlang,
     servr (>= 0.15.1),
     shiny,
-    sys
+    sys, 
+    tidyr
 Suggests:
     testthat
 Remotes: openvolley/datavolley, openvolley/ovideo

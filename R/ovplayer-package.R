@@ -12,4 +12,5 @@
 #' @importFrom rlang .data
 #' @importFrom shiny column fluidPage fluidRow isolate observe observeEvent onSessionEnded onStop plotOutput reactive reactiveVal reactiveValues renderUI sliderInput uiOutput updateActionButton
 #' @importFrom stats na.omit setNames
+#' @importFrom tidyr unite
 NULL

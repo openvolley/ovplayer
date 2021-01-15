@@ -1,6 +1,6 @@
 ovp_shiny_server <- function(app_data) {
     function(input, output, session) {
-        plays_cols_to_show_default <- c("video_time", "code", "set_number", "home_team_score", "visiting_team_score")
+        plays_cols_to_show_default <- c("video_time", "code", "set_number","home_team_score","visiting_team_score")
         plays_cols_to_show <- if (!is.null(app_data$plays_cols_to_show)) app_data$plays_cols_to_show else plays_cols_to_show_default ## this will be modified depending on columns actually in playlist
         playlist_in <- reactiveVal(app_data$playlist)
 
@@ -8,8 +8,11 @@ ovp_shiny_server <- function(app_data) {
         output$playstable <- DT::renderDataTable({
             mydat <- playstable_data()
             
-            mydat[,"code"] <- sapply(mydat[,"code"], function(x) paste0('<strong style="background-color:white;border-radius: 5px;padding: 3px; border: 2px solid #73AD21;">',x,'</strong>'))
             if (!is.null(mydat)) {
+
+                if("code" %in% plays_cols_to_show) mydat[,"code"] <- sapply(mydat[,"code"], function(x) paste0('<strong style="background-color:white;border-radius: 5px;padding: 3px; border: 2px solid #73AD21;">',x,'</strong>'))
+                if("home_team_score" %in% plays_cols_to_show)  mydat[,"home_team_score"] <- sapply(mydat[,"home_team_score"], function(x) paste0('<strong style="background-color:grey;border-radius: 5px;padding: 3px;">',x,'</strong>'))
+                if("home_team_score" %in% plays_cols_to_show)  mydat[,"visiting_team_score"] <- sapply(mydat[,"visiting_team_score"], function(x) paste0('<strong style="background-color:grey;border-radius: 5px;padding: 3px;">',x,'</strong>'))
                 DT::datatable(names_first_to_capital(mydat[, plays_cols_to_show, drop = FALSE]), rownames = FALSE,
                               extensions = "Scroller", selection = list(mode = "single", selected = 1, target = "row"),
                               escape = FALSE, 
