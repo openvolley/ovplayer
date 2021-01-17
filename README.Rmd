@@ -42,7 +42,8 @@ At this stage it is entirely experimental. Beware!
 ```{r eval = FALSE}
 library(ovplayer)
 library(ovideo)
-
+library(shinyMobile)
+library(shinyjs)
 ## read data file bundled with package
 ##  this is a very small example file that contains only one rally
 x <- datavolley::dv_read(system.file("extdata/190301_kats_beds-clip.dvw", package = "ovplayer"))
@@ -69,6 +70,12 @@ ply <- ov_video_playlist(px, x$meta, extra_cols = c("subtitle", "subtitleskill",
 
 ## start the shiny app
 ovp_shiny(playlist = ply)
+
+
+## Or the mobile version
+
+ovp_shiny(playlist = ply, mobile = TRUE, host = "0.0.0.0")
+# and then go to "myIP:port" on your modile to check it out (same wifi)
 
 ```
 

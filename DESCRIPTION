@@ -23,6 +23,8 @@ Imports:
     rlang,
     servr (>= 0.15.1),
     shiny,
+    shinyjs,
+    shinyMobile,
     sys, 
     tidyr
 Suggests:

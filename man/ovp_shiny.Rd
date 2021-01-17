@@ -9,6 +9,7 @@ ovp_shiny(
   video_server = NULL,
   launch_browser = TRUE,
   mobile = FALSE,
+  host = "127.0.0.1",
   ...
 )
 }
@@ -18,6 +19,10 @@ ovp_shiny(
 \item{video_server}{string: the method used to serve local video files, either "lighttpd" or "servr". If it is \code{NULL}, no local server will be started and only remote video files can be used}
 
 \item{launch_browser}{logical: if \code{TRUE}, launch the app in the system's default web browser (passed to \code{\link[shiny]{runApp}}'s \code{launch.browser} parameter)}
+
+\item{mobile}{logical: if \code{TRUE}, launch the app's mobile UI version}
+
+\item{host}{string: shiny host. Default to '127.0.0.1'}
 
 \item{...}{: additional parameters passed to the UI and server functions}
 }
