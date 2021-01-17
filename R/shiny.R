@@ -31,7 +31,7 @@ ovp_shiny <- function(playlist, video_server = NULL, launch_browser = TRUE, mobi
         vsrv <- ovp_video_server(method = video_server, host = host)
         onStop(function() try({ vsrv$cleanup_fun() }, silent = TRUE))
     }
-    app_data <- c(list(playlist = playlist, video_serve_method = vsrv$method, video_server_dir = vsrv$dir, video_server_url = vsrv$url), list(...))
+    app_data <- c(list(playlist = playlist, video_serve_method = vsrv$method, video_server_dir = vsrv$dir, video_server_url = vsrv$url, mobile = mobile), list(...))
     this_app <- list(ui = if (mobile) ovp_shiny_mobile_ui(app_data = app_data) else ovp_shiny_ui(app_data = app_data),
                      server = ovp_shiny_server(app_data = app_data))
     shiny::runApp(this_app, display.mode = "normal", launch.browser = launch_browser, host = host)
