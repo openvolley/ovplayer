@@ -22,7 +22,7 @@ ovp_shiny(
 
 \item{mobile}{logical: if \code{TRUE}, launch the app's mobile UI version}
 
-\item{host}{string: shiny host. Default to '127.0.0.1'}
+\item{host}{string: shiny host. Defaults to "127.0.0.1"}
 
 \item{...}{: additional parameters passed to the UI and server functions}
 }
@@ -35,6 +35,6 @@ Launch the Shiny app
  ply <- ovp_example_playlist(1)
 
  ## start shiny app
- ovp_shiny(playlist = ply)
+ ovp_shiny(playlist = ply, video_server = "servr")
 }
 }

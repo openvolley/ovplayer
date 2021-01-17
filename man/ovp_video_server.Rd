@@ -4,12 +4,14 @@
 \alias{ovp_video_server}
 \title{Start a separate server process for serving video}
 \usage{
-ovp_video_server(method, port)
+ovp_video_server(method, port, host)
 }
 \arguments{
 \item{method}{string: either "lighttpd" or "servr". If "lighttpd" but the lighttpd executable cannot be found, "servr" will be used as a fallback}
 
 \item{port}{integer: the port to open the server on. If missing or \code{NULL}, a random port between 8001 and 12000}
+
+\item{host}{string: server host IP address (defaults to "localhost")}
 }
 \value{
 A list with components \code{method}, \code{url}, \code{port}, \code{dir} (the source dir from which files will be served), and \code{cleanup_fun} (a function to run when finished with the server, which will stop the server process and clean up its \code{dir})
