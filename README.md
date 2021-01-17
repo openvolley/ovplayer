@@ -26,14 +26,13 @@ remotes::install_github("openvolley/ovplayer")
 This R package provides a Shiny app for viewing volleyball video
 playlists.
 
-At this stage it is entirely experimental. Beware\!
+At this stage it is entirely experimental. Beware!
 
 ## Example usage
 
 ``` r
 library(ovplayer)
 library(ovideo)
-
 ## read data file bundled with package
 ##  this is a very small example file that contains only one rally
 x <- datavolley::dv_read(system.file("extdata/190301_kats_beds-clip.dvw", package = "ovplayer"))
@@ -59,7 +58,16 @@ px$subtitleskill <- ifelse(px$skill == "Attack", px$attack_code, px$skill)
 ply <- ov_video_playlist(px, x$meta, extra_cols = c("subtitle", "subtitleskill", "video_time", "code", "set_number", "home_team_score", "visiting_team_score"))
 
 ## start the shiny app
-ovp_shiny(playlist = ply)
+ovp_shiny(playlist = ply, video_server = "servr")
+
+
+## Or the mobile version. This will be served from your laptop/desktop and can
+##  be viewed by a mobile device on the same (wifi) network
+## You need to know the IP address of your laptop/desktop, we use "192.168.1.21" here
+
+ovp_shiny(playlist = ply, mobile = TRUE, host = "192.168.1.21", video_server = "servr")
+## and then go to "192.168.1.21:port" on your mobile to check it out (same wifi), where
+##  port is the port being used by the shiny app
 ```
 
 And you should get something like:
