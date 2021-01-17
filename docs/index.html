@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ovplayer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -50,7 +50,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/openvolley/ovplayer/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -91,10 +91,9 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/openvolley/ovplayer">ovplayer</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/openvolley/ovideo">ovideo</a></span><span class="op">)</span>
-
 <span class="co">## read data file bundled with package</span>
 <span class="co">##  this is a very small example file that contains only one rally</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">datavolley</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/datavolley/man/read_dv.html">dv_read</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/190301_kats_beds.dvw"</span>, package <span class="op">=</span> <span class="st">"ovplayer"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">datavolley</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/datavolley/man/read_dv.html">dv_read</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/190301_kats_beds-clip.dvw"</span>, package <span class="op">=</span> <span class="st">"ovplayer"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">## change the video file to point to our local copy, which is bundled with the ovideo package</span>
 <span class="va">x</span><span class="op">$</span><span class="va">meta</span><span class="op">$</span><span class="va">video</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>camera <span class="op">=</span> <span class="st">""</span>,
@@ -117,7 +116,16 @@
 <span class="va">ply</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ovideo/man/ov_video_playlist.html">ov_video_playlist</a></span><span class="op">(</span><span class="va">px</span>, <span class="va">x</span><span class="op">$</span><span class="va">meta</span>, extra_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"subtitle"</span>, <span class="st">"subtitleskill"</span>, <span class="st">"video_time"</span>, <span class="st">"code"</span>, <span class="st">"set_number"</span>, <span class="st">"home_team_score"</span>, <span class="st">"visiting_team_score"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">## start the shiny app</span>
-<span class="fu"><a href="reference/ovp_shiny.html">ovp_shiny</a></span><span class="op">(</span>playlist <span class="op">=</span> <span class="va">ply</span>, video_server <span class="op">=</span> <span class="st">"servr"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="reference/ovp_shiny.html">ovp_shiny</a></span><span class="op">(</span>playlist <span class="op">=</span> <span class="va">ply</span>, video_server <span class="op">=</span> <span class="st">"servr"</span><span class="op">)</span>
+
+
+<span class="co">## Or the mobile version. This will be served from your laptop/desktop and can</span>
+<span class="co">##  be viewed by a mobile device on the same (wifi) network</span>
+<span class="co">## You need to know the IP address of your laptop/desktop, we use "192.168.1.21" here</span>
+
+<span class="fu"><a href="reference/ovp_shiny.html">ovp_shiny</a></span><span class="op">(</span>playlist <span class="op">=</span> <span class="va">ply</span>, mobile <span class="op">=</span> <span class="cn">TRUE</span>, host <span class="op">=</span> <span class="st">"192.168.1.21"</span>, video_server <span class="op">=</span> <span class="st">"servr"</span><span class="op">)</span>
+<span class="co">## and then go to "192.168.1.21:port" on your mobile to check it out (same wifi), where</span>
+<span class="co">##  port is the port being used by the shiny app</span></code></pre></div>
 <p>And you should get something like:</p>
 <p><img src="reference/figures/ovplayer.png" style="border: 1px solid black"></p>
 </div>
