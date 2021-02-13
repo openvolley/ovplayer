@@ -2,10 +2,10 @@ ovp_shiny_ui <- function(app_data) {
     fluidPage(
         ovideo::ov_video_js(youtube = TRUE),
         tags$head(
-                 tags$style("#subtitle { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: lightblue; font-size: 14px;} #subtitleskill { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: coral; font-size: 14px;}"),
-                 tags$style("#headerblock {border-radius:4px; padding:10px; margin-bottom:5px; min-height:120px; color:black;} h5 {font-weight: bold;}"),
-                 if (!is.null(app_data$css)) tags$style(app_data$css)
-             ),
+            tags$style("#subtitle { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: lightblue; font-size: 14px;} #subtitleskill { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: coral; font-size: 14px;}"),
+            tags$style("#headerblock {border-radius:4px; padding:10px; margin-bottom:5px; min-height:120px; color:black;} h5 {font-weight: bold;}"),
+            if (!is.null(app_data$css)) tags$style(app_data$css)
+        ),
         if (!is.null(app_data$ui_header)) {
             app_data$ui_header
         } else {
@@ -21,49 +21,46 @@ ovp_shiny_ui_main <- function() {
     tagList(
         ## js to track size of video element
         tags$head(tags$script("var vo_rsztmr;
-$(document).on('shiny:sessioninitialized', function() {
-    Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight());
-    $('#dv_player').prop('muted', true);
-    dvjs_yt_first_mute = true;
-    $(window).resize(function() {
-      clearTimeout(vo_rsztmr);
-      vo_rsztmr = setTimeout(vo_doneResizing, 500); });
-    function vo_doneResizing() {
-      Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight());
-    }
-});"),
+                              $(document).on('shiny:sessioninitialized', function() {
+                              Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight());
+                              $('#dv_player').prop('muted', true);
+                              dvjs_yt_first_mute = true;
+                              $(window).resize(function() {
+                              clearTimeout(vo_rsztmr);
+                              vo_rsztmr = setTimeout(vo_doneResizing, 500); });
+                              function vo_doneResizing() {
+                              Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight());
+                              }
+                              });"),
     tags$style(".showhide {border-radius: 20px; padding: 6px 9px; background: #668;} .showhide:hover {background: #668;} .showhide:focus {background: #668;}")
-),
-uiOutput("error_dialog"),
-fluidRow(column(8, tags$div(id = "video_holder",
-                            ovideo::ov_video_player(id = "dv_player", type = "local", controls = FALSE, poster = "data:image/gif,AAAA", style = "border: 1px solid black; width: 90%;", onloadstart = "set_vspinner();", oncanplay = "remove_vspinner();"),
-                            ovideo::ov_video_player(id = "dvyt_player", type = "youtube", controls = FALSE, style = "border: 1px solid black; width: 90%; height: 480px; display:none;")), ## start hidden
-                plotOutput("video_overlay"),
-                uiOutput("player_controls_ui", style = "margin-top: 12px;"),
-                uiOutput("video_dialog")),
-         column(4, uiOutput("tableheader"),
-                DT::dataTableOutput("playstable"),
-                uiOutput("chart_ui")
-                )),
-tags$hr(),
-sliderInput("playback_rate", "Playback rate:", min = 0.1, max = 2.0, value = 1.0, step = 0.1),
-tags$script("set_vspinner = function() { $('#dv_player').addClass('loading'); }"),
-tags$script("remove_vspinner = function() { $('#dv_player').removeClass('loading'); }"),
-tags$style("video.loading { background: black; }"),
-tags$script("function dvjs_video_onstart() { Shiny.setInputValue('playstable_current_item', dvjs_video_controller.current); el=document.getElementById(\"subtitle\"); if (el !== null) { el.textContent=dvjs_video_controller.queue[dvjs_video_controller.current].subtitle; }; el=document.getElementById(\"subtitleskill\"); if (el !== null) { el.textContent=dvjs_video_controller.queue[dvjs_video_controller.current].subtitleskill; }; if (dvjs_video_controller.type == 'youtube') { Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); } else { Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); }; Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight()); }")
-)
-}
+        ),
+    uiOutput("error_dialog"),
+    fluidRow(column(8, tags$div(id = "video_holder",
+                                ovideo::ov_video_player(id = "dv_player", type = "local", controls = FALSE, poster = "data:image/gif,AAAA", style = "border: 1px solid black; width: 90%;", onloadstart = "set_vspinner();", oncanplay = "remove_vspinner();"),
+                                ovideo::ov_video_player(id = "dvyt_player", type = "youtube", controls = FALSE, style = "border: 1px solid black; width: 90%; height: 480px; display:none;")), ## start hidden
+                    plotOutput("video_overlay"),
+                    uiOutput("player_controls_ui", style = "margin-top: 12px;"),
+                    uiOutput("video_dialog")),
+             column(4, uiOutput("tableheader"),
+                    DT::dataTableOutput("playstable"),
+                    uiOutput("chart_ui")
+             )),
+    tags$hr(),
+    sliderInput("playback_rate", "Playback rate:", min = 0.1, max = 2.0, value = 1.0, step = 0.1),
+    tags$script("set_vspinner = function() { $('#dv_player').addClass('loading'); }"),
+    tags$script("remove_vspinner = function() { $('#dv_player').removeClass('loading'); }"),
+    tags$style("video.loading { background: black; }"),
+    tags$script("function dvjs_video_onstart() { Shiny.setInputValue('playstable_current_item', dvjs_video_controller.current); el=document.getElementById(\"subtitle\"); if (el !== null) { el.textContent=dvjs_video_controller.queue[dvjs_video_controller.current].subtitle; }; el=document.getElementById(\"subtitleskill\"); if (el !== null) { el.textContent=dvjs_video_controller.queue[dvjs_video_controller.current].subtitleskill; }; if (dvjs_video_controller.type == 'youtube') { Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); } else { Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); }; Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight()); }")
+    )
+    }
 
 ovp_shiny_mobile_ui <- function(app_data) {
     f7Page(
         title = "Openvolley's - Volleyball Video Player",
         ovideo::ov_video_js(youtube = TRUE),
-        useShinyjs(),
         tags$head(
             tags$style("#subtitle { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: lightblue; font-size: 14px;} #subtitleskill { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: coral; font-size: 14px;}"),
             tags$style("#headerblock {border-radius:4px; padding:10px; margin-bottom:5px; min-height:120px; color:black;} h5 {font-weight: bold;}"),
-            #tags$script(HTML(" function openFullscreen(elem) { if (elem.requestFullscreen) {    elem.requestFullscreen();  } else if (elem.mozRequestFullScreen) { /* Firefox */elem.mozRequestFullScreen();  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */    elem.webkitRequestFullscreen();  } else if (elem.msRequestFullscreen) { /* IE/Edge */    elem.msRequestFullscreen();  }}")),
-            #tags$style(HTML("#ggplot:-webkit-full-screen { height: 100%; margin: 0;}#ggplot:-ms-fullscreen {height: 100%;}#ggplot:fullscreen {height: 100%;}")),
             if (!is.null(app_data$css)) tags$style(app_data$css)
         ),
         ovp_shiny_ui_mobile_main()
@@ -88,8 +85,7 @@ ovp_shiny_ui_mobile_main <- function() {
             f7Fab(inputId = "next_player", label = f7Icon("arrow_right")),
             f7Fab(inputId = "prev_player", label = f7Icon("arrow_left")),
             f7Fab(inputId = "play_player", label = f7Icon("playpause")),
-            f7Fab(inputId = "start_player", label = f7Icon("greaterthan"))#,
-            #f7Fab(inputId = "fullscreen", label = f7Icon("viewfinder"))
+            f7Fab(inputId = "start_player", label = f7Icon("greaterthan"))
         ), 
         f7Shadow(
             intensity = 16,
@@ -114,19 +110,19 @@ ovp_shiny_ui_mobile_main <- function() {
                     ),
                     uiOutput("error_dialog"),
                     #fluidRow(column(8, 
-                                    tags$div(id = "video_holder",
-                                             ovideo::ov_video_player(id = "dv_player", type = "local", controls = FALSE, poster = "data:image/gif,AAAA", style = "border: 1px solid black; width: 98%;", onloadstart = "set_vspinner();", oncanplay = "remove_vspinner();"),
-                                             ovideo::ov_video_player(id = "dvyt_player", type = "youtube", controls = FALSE, style = "border: 1px solid black; width: 98%; height: 480px; display:none;")), ## start hidden
-                                    plotOutput("video_overlay"),
-                                    #uiOutput("player_controls_score_ui", style = "margin-top: 12px;"),
-                                    uiOutput("player_controls_skill_ui", style = "margin-top: 12px;"),
-                                    #uiOutput("player_controls_ui", style = "margin-top: 12px;"),
-                                    uiOutput("video_dialog"),#),
-                            # column(4, 
-                                    uiOutput("tableheader"),
-                                    DT::dataTableOutput("playstable"),
-                            #        uiOutput("chart_ui")
-                             #)),
+                    tags$div(id = "video_holder",
+                             ovideo::ov_video_player(id = "dv_player", type = "local", controls = FALSE, poster = "data:image/gif,AAAA", style = "border: 1px solid black; width: 98%;", onloadstart = "set_vspinner();", oncanplay = "remove_vspinner();"),
+                             ovideo::ov_video_player(id = "dvyt_player", type = "youtube", controls = FALSE, style = "border: 1px solid black; width: 98%; height: 480px; display:none;")), ## start hidden
+                    plotOutput("video_overlay"),
+                    #uiOutput("player_controls_score_ui", style = "margin-top: 12px;"),
+                    uiOutput("player_controls_skill_ui", style = "margin-top: 12px;"),
+                    #uiOutput("player_controls_ui", style = "margin-top: 12px;"),
+                    uiOutput("video_dialog"),#),
+                    # column(4, 
+                    uiOutput("tableheader"),
+                    DT::dataTableOutput("playstable"),
+                    #        uiOutput("chart_ui")
+                    #)),
                     tags$hr(),
                     #sliderInput("playback_rate", "Playback rate:", min = 0.1, max = 2.0, value = 1.0, step = 0.1),
                     f7Slider("playback_rate", "Playback rate:", min = 0.1, max = 2.0, value = 1.0, step = 0.1),
