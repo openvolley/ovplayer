@@ -62,6 +62,8 @@ ovp_shiny_mobile_ui <- function(app_data) {
         tags$head(
             tags$style("#subtitle { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: lightblue; font-size: 14px;} #subtitleskill { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: coral; font-size: 14px;}"),
             tags$style("#headerblock {border-radius:4px; padding:10px; margin-bottom:5px; min-height:120px; color:black;} h5 {font-weight: bold;}"),
+            #tags$script(HTML(" function openFullscreen(elem) { if (elem.requestFullscreen) {    elem.requestFullscreen();  } else if (elem.mozRequestFullScreen) { /* Firefox */elem.mozRequestFullScreen();  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */    elem.webkitRequestFullscreen();  } else if (elem.msRequestFullscreen) { /* IE/Edge */    elem.msRequestFullscreen();  }}")),
+            #tags$style(HTML("#ggplot:-webkit-full-screen { height: 100%; margin: 0;}#ggplot:-ms-fullscreen {height: 100%;}#ggplot:fullscreen {height: 100%;}")),
             if (!is.null(app_data$css)) tags$style(app_data$css)
         ),
         ovp_shiny_ui_mobile_main()
@@ -86,7 +88,8 @@ ovp_shiny_ui_mobile_main <- function() {
             f7Fab(inputId = "next_player", label = f7Icon("arrow_right")),
             f7Fab(inputId = "prev_player", label = f7Icon("arrow_left")),
             f7Fab(inputId = "play_player", label = f7Icon("playpause")),
-            f7Fab(inputId = "start_player", label = f7Icon("greaterthan"))
+            f7Fab(inputId = "start_player", label = f7Icon("greaterthan"))#,
+            #f7Fab(inputId = "fullscreen", label = f7Icon("viewfinder"))
         ), 
         f7Shadow(
             intensity = 16,

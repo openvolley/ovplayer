@@ -384,6 +384,7 @@ ovp_shiny_mobile_server <- function(app_data) {
         })
         
         onclick("start_player", {
+            print("start")
             evaljs("dvjs_video_play();")
         })
         onclick("prev_player", {
@@ -393,11 +394,15 @@ ovp_shiny_mobile_server <- function(app_data) {
             evaljs("dvjs_video_next();")
         })
         onclick("play_player", {
+            print("pause")
             evaljs("dvjs_video_pause();")
         })
         onclick("back_player", {
             evaljs("dvjs_jog(-1);")
         })
+        # onclick("fullscreen", {
+        #     evaljs("openFullscreen(document.getElementById('video_overlay'));")
+        # })
         observeEvent(input$playback_rate, {
             if (!is.null(input$playback_rate)) ov_video_control("set_playback_rate", input$playback_rate)
         })
