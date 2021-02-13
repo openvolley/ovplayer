@@ -167,6 +167,9 @@ ovp_shiny_server <- function(app_data) {
             observeEvent(input$back_player, {
                 evaljs("dvjs_jog(-1);")
             })
+            observeEvent(input$fullscreen_player, {
+                evaljs("openFullscreen(document.getElementById('video_holder'));")
+            })
         } else {
             output$player_controls_ui <- renderUI({
                 tags$div(tags$button("Play", onclick = "dvjs_video_play();"),

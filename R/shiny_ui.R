@@ -32,6 +32,8 @@ ovp_shiny_ui_main <- function() {
                               Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight());
                               }
                               });"),
+                  tags$script(HTML("function openFullscreen(elem) {  if (elem.requestFullscreen) {    elem.requestFullscreen();  } else if (elem.mozRequestFullScreen) { /* Firefox */    elem.mozRequestFullScreen();  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */    elem.webkitRequestFullscreen();  } else if (elem.msRequestFullscreen) { /* IE/Edge */    elem.msRequestFullscreen();  }}")),
+                  tags$style(HTML("#dv_player:-webkit-full-screen {  height: 100%;  margin: 0;}#dv_player:-ms-fullscreen {  height: 100%;}#dv_player:fullscreen {  height: 100%;}")),
     tags$style(".showhide {border-radius: 20px; padding: 6px 9px; background: #668;} .showhide:hover {background: #668;} .showhide:focus {background: #668;}")
         ),
     uiOutput("error_dialog"),
@@ -85,7 +87,8 @@ ovp_shiny_ui_mobile_main <- function() {
             f7Fab(inputId = "next_player", label = f7Icon("arrow_right")),
             f7Fab(inputId = "prev_player", label = f7Icon("arrow_left")),
             f7Fab(inputId = "play_player", label = f7Icon("playpause")),
-            f7Fab(inputId = "start_player", label = f7Icon("greaterthan"))
+            f7Fab(inputId = "start_player", label = f7Icon("greaterthan")), 
+            f7Fab(inputId = "fullscreen_player", label = f7Icon("viewfinder"))
         ), 
         f7Shadow(
             intensity = 16,
