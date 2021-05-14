@@ -35,6 +35,6 @@ Launch the Shiny app
  ply <- ovp_example_playlist(1)
 
  ## start shiny app
- ovp_shiny(playlist = ply, video_server = "servr")
+ ovp_shiny(playlist = ply)
 }
 }

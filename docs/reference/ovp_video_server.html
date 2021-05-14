@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ovplayer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -91,7 +91,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/openvolley/ovplayer/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -117,7 +117,7 @@
     <p>Note that performance with "servr" may not be great, particularly with each new video, because servr has to read the entire video file before it can serve clips from it.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ovp_video_server</span><span class='op'>(</span><span class='va'>method</span>, <span class='va'>port</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ovp_video_server</span><span class='op'>(</span><span class='va'>method</span>, <span class='va'>port</span>, <span class='va'>host</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -129,6 +129,10 @@
     <tr>
       <th>port</th>
       <td><p>integer: the port to open the server on. If missing or <code>NULL</code>, a random port between 8001 and 12000</p></td>
+    </tr>
+    <tr>
+      <th>host</th>
+      <td><p>string: server host IP address (defaults to "localhost")</p></td>
     </tr>
     </table>
 

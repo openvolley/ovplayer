@@ -13,7 +13,7 @@
 #'  ply <- ovp_example_playlist(1)
 #'
 #'  ## start shiny app
-#'  ovp_shiny(playlist = ply, video_server = "servr")
+#'  ovp_shiny(playlist = ply)
 #' }
 #' @export
 ovp_shiny <- function(playlist, video_server = NULL, launch_browser = TRUE, mobile = FALSE, host = "127.0.0.1",...) {

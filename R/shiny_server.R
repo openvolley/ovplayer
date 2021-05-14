@@ -3,17 +3,13 @@ ovp_shiny_server <- function(app_data) {
         plays_cols_to_show_default <- c("video_time", "code", "set_number","home_team_score","visiting_team_score")
         plays_cols_to_show <- if (!is.null(app_data$plays_cols_to_show)) app_data$plays_cols_to_show else plays_cols_to_show_default ## this will be modified depending on columns actually in playlist
         playlist_in <- reactiveVal(app_data$playlist)
-        
         playstable_data <- reactiveVal(NULL)
         output$playstable <- DT::renderDataTable({
             mydat <- playstable_data()
             if (!is.null(mydat)) {
-                
                 if("code" %in% plays_cols_to_show) mydat[,"code"] <- sapply(mydat[,"code"], function(x) paste0('<strong style="background-color:white;border-radius: 5px;padding: 3px; border: 2px solid #73AD21;">',x,'</strong>'))
-                
                 if("home_team_score" %in% plays_cols_to_show)  mydat[,"home_team_score"] <- sapply(mydat[,"home_team_score"], function(x) paste0('<strong style="background-color:grey;border-radius: 5px;padding: 3px;">',x,'</strong>'))
                 if("visiting_team_score" %in% plays_cols_to_show)  mydat[,"visiting_team_score"] <- sapply(mydat[,"visiting_team_score"], function(x) paste0('<strong style="background-color:grey;border-radius: 5px;padding: 3px;">',x,'</strong>'))
-                
                 DT::datatable(names_first_to_capital(mydat[, plays_cols_to_show, drop = FALSE]), rownames = FALSE,
                               extensions = "Scroller", selection = list(mode = "single", selected = 1, target = "row"),
                               escape = FALSE, 
@@ -79,7 +75,6 @@ ovp_shiny_server <- function(app_data) {
                 evaljs(paste0("dvjs_video_controller.current=", clicked_row-1, "; dvjs_video_play();"))
             }
         })
-        
         playlist <- reactive({
             pl <- playlist_in()
             if (!is.null(pl) && nrow(pl) > 0 && all(c("video_src", "type") %in% names(pl))) {
@@ -119,7 +114,6 @@ ovp_shiny_server <- function(app_data) {
                 ##                                         subtitle = js_str_nospecials(paste("Set", .data$set_number, "-", .data$home_team, .data$home_team_score, "-", .data$visiting_team_score, .data$visiting_team)),
                 ##                                         subtitleskill = js_str_nospecials(paste(.data$player_name, "-", .data$skilltype, ":", .data$evaluation_code)))
                 ##                    event_list <- dplyr::filter(event_list, !is.na(.data$video_time)) ## can't have missing video time entries
-                
                 vpt <- if (all(pl$type %eq% "youtube")) "youtube" else if (all(pl$type == "local")) "local" else stop("cannot handle playlists of mixed type yet")
                 video_player_type(vpt)
                 pl
@@ -127,7 +121,6 @@ ovp_shiny_server <- function(app_data) {
                 NULL
             }
         })
-        
         ## video stuff
         video_player_type <- reactiveVal("local") ## the current player type, either "local" or "youtube"
         observe({
@@ -149,7 +142,6 @@ ovp_shiny_server <- function(app_data) {
                 evaljs("document.getElementById(\"subtitle\").textContent=\"Score\"; document.getElementById(\"subtitleskill\").textContent=\"Skill\";")
             }
         })
-        
         if (isTRUE(app_data$mobile)) {
             observeEvent(input$start_player, {
                 evaljs("dvjs_video_play();")
@@ -179,17 +171,16 @@ ovp_shiny_server <- function(app_data) {
                          tags$button("Back 1s", onclick = "dvjs_jog(-1);"),
                          tags$span(id = "subtitle", "Score"),
                          tags$span(id = "subtitleskill", "Skill")
-                )
+                         )
             })
         }
-        
         observeEvent(input$playback_rate, {
             if (!is.null(input$playback_rate)) ov_video_control("set_playback_rate", input$playback_rate)
         })
         output$player_controls_skill_ui <- renderUI({
             tags$div(if (isTRUE(app_data$mobile)) tags$span(id = "subtitle", "Player"),
                      tags$span(id = "subtitleskill", "Skill")
-            )
+                     )
         })
         if (!isTRUE(app_data$mobile)) {
             output$player_controls_score_ui <- renderUI({
@@ -197,7 +188,6 @@ ovp_shiny_server <- function(app_data) {
             })
         }
         output$chart_ui <- renderUI(app_data$chart_renderer)
-        
         ## height of the video player element
         vo_height <- reactiveVal("auto")
         observe({
@@ -244,7 +234,6 @@ ovp_shiny_server <- function(app_data) {
                 evaljs("document.getElementById('video_overlay').style.marginTop = '0px';")
             }
         })
-        
         ## panel show/hide
         panel_visible <- reactiveValues(filter2 = FALSE)
         observeEvent(input$collapse_filter2, {
@@ -254,6 +243,5 @@ ovp_shiny_server <- function(app_data) {
         observe({
             if (panel_visible$filter2) updateActionButton(session, "collapse_filter2", label = "Hide") else updateActionButton(session, "collapse_filter2", label = "Show")
         })
-        
     }
 }
