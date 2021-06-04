@@ -169,11 +169,12 @@ ovp_shiny_server <- function(app_data) {
             })
         } else {
             output$player_controls_ui <- renderUI({
-                tags$div(tags$button("Play", onclick = "dvjs_video_play();"),
-                         tags$button("Prev", onclick = "dvjs_video_prev();"),
-                         tags$button("Next", onclick = "dvjs_video_next(false);"),
-                         tags$button("Pause", onclick = "dvjs_video_pause();"),
-                         tags$button("Back 1s", onclick = "dvjs_jog(-1);"),
+                tags$div(tags$button(tags$span(icon("play-circle")), onclick = "dvjs_video_play();", title = "Play"),
+                         tags$button(tags$span(icon("step-backward")), onclick = "dvjs_video_prev();", title = "Prev"),
+                         tags$button(tags$span(icon("step-forward")), onclick = "dvjs_video_next(false);", title = "Next"),
+                         tags$button(tags$span(icon("pause-circle")), onclick = "dvjs_video_pause();", title = "Pause"),
+                         tags$button(tags$span(icon("backward"), " 1s"), onclick = "dvjs_jog(-1);", title = "Back 1s"),
+                         tags$button(tags$span(icon("expand")), onclick = "dvjs_fullscreen();", title = "Full screen"),
                          tags$span(id = "subtitle", "Score"),
                          tags$span(id = "subtitleskill", "Skill")
                          )
