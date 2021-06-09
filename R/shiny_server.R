@@ -130,6 +130,7 @@ ovp_shiny_server <- function(app_data) {
 
         ## video stuff
         video_player_type <- reactiveVal("local") ## the current player type, either "local" or "youtube"
+        play_seamless <- reactiveVal(TRUE)
         observe({
             if (!is.null(playlist())) {
                 ## when playlist() changes, push it through to the javascript playlist
@@ -141,7 +142,7 @@ ovp_shiny_server <- function(app_data) {
                     js_show("dvyt_player")
                 }
                 ov_video_control("stop")
-                evaljs(ovideo::ov_playlist_as_onclick(playlist(), video_id = if (video_player_type() == "local") "dv_player" else "dvyt_player", dvjs_fun = "dvjs_set_playlist_and_play", seamless = TRUE))
+                evaljs(ovideo::ov_playlist_as_onclick(playlist(), video_id = if (video_player_type() == "local") "dv_player" else "dvyt_player", dvjs_fun = "dvjs_set_playlist_and_play", seamless = isTRUE(play_seamless())))
             } else {
                 ## empty playlist, so stop the video, and clean things up
                 evaljs("dvjs_clear_playlist();")
