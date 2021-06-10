@@ -2,6 +2,7 @@ ovp_shiny_ui <- function(app_data) {
     fluidPage(
         ovideo::ov_video_js(youtube = TRUE),
         tags$head(
+                 tags$title(if (!is.null(app_data$title)) app_data$title else "Openvolley's - Volleyball Video Player"),
                  tags$style("#subtitle { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: lightblue; font-size: 14px;} #subtitleskill { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: coral; font-size: 14px;}"),
                  tags$style("#headerblock {border-radius:4px; padding:10px; margin-bottom:5px; min-height:120px; color:black;} h5 {font-weight: bold;}"),
                  if (!is.null(app_data$css)) tags$style(app_data$css)
@@ -56,7 +57,7 @@ tags$div(style = "display:none;", icon("question-circle")))
 
 ovp_shiny_mobile_ui <- function(app_data) {
     f7Page(
-        title = "Openvolley's - Volleyball Video Player",
+        title = if (!is.null(app_data$title)) app_data$title else "Openvolley's - Volleyball Video Player",
         ovideo::ov_video_js(youtube = TRUE),
         tags$head(
             tags$style("#subtitle { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: lightblue; font-size: 14px;} #subtitleskill { border: 1px solid black; border-radius: 1px; padding: 5px; margin-left: 6px; background-color: coral; font-size: 14px;}"),
@@ -81,6 +82,7 @@ ovp_shiny_ui_mobile_main <- function() {
             color = "pink",
             sideOpen = "top",
             extended = TRUE,
+            f7Fab(inputId = "fullscreen_player", label = f7Icon("expand")),
             f7Fab(inputId = "back_player", label = f7Icon("gobackward_minus")),
             f7Fab(inputId = "next_player", label = f7Icon("arrow_right")),
             f7Fab(inputId = "prev_player", label = f7Icon("arrow_left")),
@@ -126,6 +128,7 @@ ovp_shiny_ui_mobile_main <- function() {
                     tags$hr(),
                     #sliderInput("playback_rate", "Playback rate:", min = 0.1, max = 2.0, value = 1.0, step = 0.1),
                     f7Slider("playback_rate", "Playback rate:", min = 0.1, max = 2.0, value = 1.0, step = 0.1),
+                    uiOutput("extra_ui"),
                     tags$script("set_vspinner = function() { $('#dv_player').addClass('loading'); }"),
                     tags$script("remove_vspinner = function() { $('#dv_player').removeClass('loading'); }"),
                     tags$style("video.loading { background: black; }"),
