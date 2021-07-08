@@ -25,7 +25,7 @@ Imports:
     servr (>= 0.15.1),
     shiny,
     shinyMobile,
-    sys, 
+    sys,
     tidyr
 Suggests:
     testthat
