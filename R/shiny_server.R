@@ -200,6 +200,32 @@ ovp_shiny_server <- function(app_data) {
         }
         output$chart_ui <- renderUI(app_data$chart_renderer)
 
+        ## key handling
+        observeEvent(input$cmd, {
+            if (!is.null(input$cmd)) {
+                temp <- strsplit(input$cmd, "@")[[1]]
+                ## elements are keyid element_class element_id cursor_position field_length time
+                mycmd <- temp[1]
+                myclass <- temp[2]
+                if (!is.null(myclass) && nzchar(myclass) && myclass %in% c("form-control")) {
+                    ## don't process these - they are e.g. key events in DT filter boxes
+                    mycmd <- NULL
+                }
+                if (!is.null(mycmd)) {
+                    ## mycmd comes in as a character representation of the ascii code like "65" or "32"
+                    mykey <- intToUtf8(as.numeric(mycmd))
+                    ## note that if cmdbox is an INPUT and focus is cmdbox then the document$keypress event doesn't get fired, because it gets grabbed by the cmdbox event handler
+                    ignore_keys <- NULL ## placeholder for keys handled elsewhere in code (e.g. 37, 39 might not trigger here, may depend on browser)
+                    if (debug > 1) cat("input: ", mycmd, "\n")
+                    if (mycmd %in% ignore_keys) {
+                        if (debug > 1) cat(" (ignored)")
+                    } else if (mycmd %in% utf8ToInt("qQ0")) {
+                        evaljs("dvjs_video_pause();")
+                    }
+                }
+            }
+        })
+
         ## height of the video player element
         vo_height <- reactiveVal("auto")
         observe({
