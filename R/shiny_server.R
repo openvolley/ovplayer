@@ -13,11 +13,11 @@ ovp_shiny_server <- function(app_data) {
                 
                 if("home_team_score" %in% plays_cols_to_show)  mydat[,"home_team_score"] <- sapply(mydat[,"home_team_score"], function(x) paste0('<strong style="background-color:grey;border-radius: 5px;padding: 3px;">',x,'</strong>'))
                 if("visiting_team_score" %in% plays_cols_to_show)  mydat[,"visiting_team_score"] <- sapply(mydat[,"visiting_team_score"], function(x) paste0('<strong style="background-color:grey;border-radius: 5px;padding: 3px;">',x,'</strong>'))
-                
+                scrolly <- if (is.numeric(vo_height())) max(200, vo_height() - 96) else 200 ## 96px for table header row
                 DT::datatable(names_first_to_capital(mydat[, plays_cols_to_show, drop = FALSE]), rownames = FALSE,
                               extensions = "Scroller", selection = list(mode = "single", selected = 1, target = "row"),
                               escape = FALSE, 
-                              options = list(sDom = '<"top">t<"bottom">rlp', deferRender = TRUE, scrollY = 200, scroller = TRUE, ordering = FALSE)) ## no column sorting
+                              options = list(sDom = '<"top">t<"bottom">rlp', deferRender = TRUE, scrollY = scrolly, scroller = TRUE, ordering = FALSE)) ## no column sorting
             } else {
                 NULL
             }
