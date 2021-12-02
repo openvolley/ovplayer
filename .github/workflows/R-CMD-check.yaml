@@ -33,6 +33,10 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v1
 
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y libavdevice-dev libarchive-dev
+
       - uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.config.r }}
