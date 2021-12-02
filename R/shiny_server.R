@@ -216,11 +216,16 @@ ovp_shiny_server <- function(app_data) {
                     mykey <- intToUtf8(as.numeric(mycmd))
                     ## note that if cmdbox is an INPUT and focus is cmdbox then the document$keypress event doesn't get fired, because it gets grabbed by the cmdbox event handler
                     ignore_keys <- NULL ## placeholder for keys handled elsewhere in code (e.g. 37, 39 might not trigger here, may depend on browser)
-                    if (debug > 1) cat("input: ", mycmd, "\n")
                     if (mycmd %in% ignore_keys) {
-                        if (debug > 1) cat(" (ignored)")
+                        ## do nothing
                     } else if (mycmd %in% utf8ToInt("qQ0")) {
                         evaljs("dvjs_video_pause();")
+                    } else if (mycmd %in% utf8ToInt("jJ4")) {
+                        evaljs("dvjs_video_prev();")
+                    } else if (mycmd %in% utf8ToInt("lL6")) {
+                        evaljs("dvjs_video_next();")
+                    } else if (mycmd %in% utf8ToInt("kK5")) {
+                        evaljs("dvjs_video_play();")
                     }
                 }
             }
