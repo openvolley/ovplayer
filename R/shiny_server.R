@@ -289,7 +289,7 @@ ovp_shiny_server <- function(app_data) {
         })
 
         observeEvent(input$video_error, {
-            vid_err_msgs <- c("video playback was aborted", "a network error caused the video download to fail", "an error occurred while trying to decode the video", "the video could not be loaded, either because the server or network failed or because the format is not supported")
+            vid_err_msgs <- c("video playback was aborted", "a network error caused the video download to fail", "an error occurred while trying to decode the video", "the video could not be loaded or the format is not supported")
             temp <- if (!is.null(input$video_error) && nzchar(input$video_error) && grepl("@", input$video_error)) {
                         tryCatch(strsplit(input$video_error, "@")[[1]], error = function(e) NULL)
                     } else {
