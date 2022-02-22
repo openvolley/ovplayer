@@ -93,7 +93,7 @@ ovp_shiny_server <- function(app_data) {
                     ##  to serve these, make symlinks in its document root directory pointing to the actual video files
                     vf <- fs::path_norm(pl$video_src[lidx])
                     for (thisf in vf) {
-                        if (fs::file_exists(thisf)) {
+                        if (fs::file_exists(as.character(thisf))) {
                             symlink_abspath <- fs::path_abs(file.path(app_data$video_server_dir, basename(thisf)))
                             suppressWarnings(try(unlink(symlink_abspath), silent = TRUE))
                             thisf <- gsub(" ", "\\\\ " , thisf) ## this may not work on Windows
