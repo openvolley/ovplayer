@@ -21,7 +21,7 @@ ovp_shiny_ui <- function(app_data) {
 ovp_shiny_ui_main <- function() {
     tagList(
         ## js to track size of video element
-        tags$head(tags$script("var vo_rsztmr;
+        tags$head(tags$script(HTML("var vo_rsztmr;
 $(document).on('shiny:sessioninitialized', function() {
     Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight());
     $('#dv_player').prop('muted', true);
@@ -32,7 +32,11 @@ $(document).on('shiny:sessioninitialized', function() {
     function vo_doneResizing() {
       Shiny.setInputValue('dv_height', $('#dv_player').innerHeight()); Shiny.setInputValue('dv_width', $('#dv_player').innerWidth()); Shiny.setInputValue('dvyt_height', $('#dvyt_player').innerHeight()); Shiny.setInputValue('dvyt_width', $('#dvyt_player').innerWidth()); Shiny.setInputValue('vo_voffset', $('#video_holder').innerHeight());
     }
-});"),
+    // check YT API loaded OK
+    var yttmr; var ytct = 0;
+    function yt_ready() { var ytok = typeof YT != 'undefined'; console.log('YT: ' + ytok); if (ytok) { yttmr = Shiny.setInputValue('YT_ok', true); } else { ytct = ytct + 1; if (ytct >= 40) { Shiny.setInputValue('YT_failed', true); } else { setTimeout(yt_ready, 250); } } }
+    yt_ready();
+});")),
     ##key press handling
     tags$script("$(document).on('keypress', function (e) { var el = document.activeElement; var len = -1; if (typeof el.value != 'undefined') { len = el.value.length; }; Shiny.onInputChange('cmd', e.which + '@' + el.className + '@' + el.id + '@' + el.selectionStart + '@' + len + '@' + new Date().getTime()); });"),
     tags$style(".showhide {border-radius: 20px; padding: 6px 9px; background: #668;} .showhide:hover {background: #668;} .showhide:focus {background: #668;} #video_holder:not(:fullscreen) #dvyt_player {height:480px;} #video_holder:fullscreen #dvyt_player {height:100vh;}")

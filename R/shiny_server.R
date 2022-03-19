@@ -132,7 +132,8 @@ ovp_shiny_server <- function(app_data) {
         video_player_type <- reactiveVal("local") ## the current player type, either "local" or "youtube"
         play_seamless <- reactiveVal(TRUE)
         observe({
-            if (!is.null(playlist())) {
+            if (!is.null(playlist()) && (!(video_player_type() == "youtube" && !isTRUE(input$YT_ok)))) {
+                ## if YT player, need to wait for the API to be loaded (YT_ok)
                 ## when playlist() changes, push it through to the javascript playlist
                 if (video_player_type() == "local") {
                     js_hide("dvyt_player")
@@ -148,6 +149,14 @@ ovp_shiny_server <- function(app_data) {
                 evaljs("dvjs_clear_playlist();")
                 ## evaljs("remove_vspinner();") ## doesn't have an effect?
                 evaljs("document.getElementById(\"subtitle\").textContent=\"Score\"; document.getElementById(\"subtitleskill\").textContent=\"Skill\";")
+            }
+        })
+
+        observe({
+            if (isTRUE(input$YT_failed)) {
+                output$video_dialog <- renderUI(tags$div(class = "alert alert-danger", "The Youtube API failed to load: check your network connection"))
+            } else {
+                output$video_dialog <- renderUI(NULL)
             }
         })
 
