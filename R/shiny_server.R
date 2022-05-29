@@ -188,6 +188,7 @@ ovp_shiny_server <- function(app_data) {
                          tags$button(tags$span(icon("pause-circle")), onclick = "dvjs_video_pause();", title = "Pause"),
                          tags$button(tags$span(icon("backward"), " 1s"), onclick = "dvjs_jog(-1);", title = "Back 1s"),
                          tags$button(tags$span(icon("expand")), onclick = "dvjs_fullscreen();", title = "Full screen"),
+                         tags$button(tags$span(icon("volume-mute")), onclick = "dvjs_toggle_mute()", title = "Toggle mute"),
                          tags$span(id = "subtitle", "Score"),
                          tags$span(id = "subtitleskill", "Skill")
                          )
