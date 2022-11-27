@@ -8,11 +8,9 @@ ovp_shiny_server <- function(app_data) {
         output$playstable <- DT::renderDataTable({
             mydat <- playstable_data()
             if (!is.null(mydat)) {
-
-                if("code" %in% plays_cols_to_show) mydat[,"code"] <- sapply(mydat[,"code"], function(x) paste0('<strong style="background-color:white;border-radius: 5px;padding: 3px; border: 2px solid #73AD21;">',x,'</strong>'))
-                
-                if("home_team_score" %in% plays_cols_to_show)  mydat[,"home_team_score"] <- sapply(mydat[,"home_team_score"], function(x) paste0('<strong style="background-color:grey;border-radius: 5px;padding: 3px;">',x,'</strong>'))
-                if("visiting_team_score" %in% plays_cols_to_show)  mydat[,"visiting_team_score"] <- sapply(mydat[,"visiting_team_score"], function(x) paste0('<strong style="background-color:grey;border-radius: 5px;padding: 3px;">',x,'</strong>'))
+                if("code" %in% plays_cols_to_show) mydat[,"code"] <- sapply(mydat[,"code"], function(x) paste0('<strong style="background-color:#73AD21; border-radius:5px; padding:3px; border:2px solid #73AD21;">',x,'</strong>'))
+                if("home_team_score" %in% plays_cols_to_show)  mydat[,"home_team_score"] <- sapply(mydat[,"home_team_score"], function(x) paste0('<strong style="background-color:grey; border-radius:5px; padding:3px;">',x,'</strong>'))
+                if("visiting_team_score" %in% plays_cols_to_show)  mydat[,"visiting_team_score"] <- sapply(mydat[,"visiting_team_score"], function(x) paste0('<strong style="background-color:grey; border-radius:5px; padding:3px;">',x,'</strong>'))
                 scrolly <- if (is.numeric(vo_height())) max(200, vo_height() - 96) else 200 ## 96px for table header row
                 DT::datatable(names_first_to_capital(mydat[, plays_cols_to_show, drop = FALSE]), rownames = FALSE,
                               extensions = "Scroller", selection = list(mode = "single", selected = 1, target = "row"),
