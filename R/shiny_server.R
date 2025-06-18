@@ -234,6 +234,8 @@ ovp_shiny_server <- function(app_data) {
                         evaljs("dvjs_video_next();")
                     } else if (mycmd %in% utf8ToInt("kK5")) {
                         evaljs("dvjs_video_play();")
+                    } else if (mycmd %in% utf8ToInt("hH7")) {
+                        evaljs("dvjs_jog(-5);")
                     }
                 }
             }
